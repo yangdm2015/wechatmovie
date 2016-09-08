@@ -152,7 +152,12 @@ Wechat.prototype.uploadMaterial = function(type,material,permanent){
       request(options)
       /*.then(resdata(response,'Upload material fails'))*/
       .then(function(response){
-        resdata(response,'Upload material fails')      
+        var _data = response[1]
+        if(_data){
+          resolve(_data)
+        }else{
+          throw new Error('Upload material fails')
+        }      
       })
       .catch(function(err){
         reject(err)
@@ -160,14 +165,7 @@ Wechat.prototype.uploadMaterial = function(type,material,permanent){
     })
   })
 }
-function resdata(response,message){  
-  var _data = response[1]
-  if(_data){
-    resolve(_data)
-  }else{
-    throw new Error(message)
-  }
-}
+
 Wechat.prototype.fetchMaterial = function(mediaId,type,permanent){
   var that = this;
   var form = {}
@@ -380,7 +378,14 @@ Wechat.prototype.checkGroup = function(openId){
           openid : openid
         }
         request({method:'POST',url: url,form:form,json:true,})
-        .then(resdata(response,'Check group fails'))
+        .then(function(response){ 
+          var _data = response[1]
+          if(_data){
+            resolve(_data)
+          }else{
+            throw new Error('Check group fails')
+          }
+        })
     })
   })
 }
@@ -399,7 +404,14 @@ Wechat.prototype.updateGroup = function(id,name){
           }
         }
         request({method:'POST',url: url,json:true,})
-        .then(resdata(response,'Update group fails'))
+        .then(function(response){ 
+          var _data = response[1]
+          if(_data){
+            resolve(_data)
+          }else{
+            throw new Error('Update group fails')
+          }
+        })
     })
   })
 }
