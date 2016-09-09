@@ -152,7 +152,7 @@ Wechat.prototype.uploadMaterial = function(type,material,permanent){
       request(options)
       /*.then(resdata(response,'Upload material fails'))*/
       .then(function(response){
-        var _data = response[1]
+        var _data = response[1] 
         if(_data){
           resolve(_data)
         }else{
